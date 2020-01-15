@@ -7,9 +7,7 @@ namespace MoviepediaApi.Models
 {
 	public class Role
 	{
-		public Actor actor { get; set; }
-		public Movie movie { get; set; }
-		public Series series { get; set; }
-		public String role { get; set; }
-	}
+		public string title { get; set; }
+		public string role { get; set; }
+    }
 }

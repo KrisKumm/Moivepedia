@@ -7,7 +7,8 @@
     transition: max-height 0.2s ease-out;
     flex-direction: column;
     /* align-items: center; */
-    overflow: auto;
+    overflow-y: auto;
+    
   }
   
 .list.open {
@@ -20,9 +21,10 @@
     display: flex;
     flex-direction: row;
     box-sizing: border-box;
+    cursor: pointer;
 }
 .item-con>p {
-    color: teal;
+    color: skyblue;
     font-size: 26px;
     padding: 0px 15px;
 }
@@ -33,6 +35,8 @@
     display: flex;
     border: rgb(214, 214, 214) solid 2px;
     flex-direction: column;
+    background-color: black;
+    overflow-x: hidden;
     /* align-items: center; */
     margin: 15px 0;
     /* text-align: centers; */
@@ -46,6 +50,7 @@
    font-size: 30px;
    color: skyblue;
    cursor: pointer;
+ 
 }
 .item-list>p:hover{
     background: #333;

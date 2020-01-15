@@ -16,7 +16,7 @@ const itemList = props => {
     list = props.list.map(element => { 
     return (
     <div onWheel={props.drag} className="item-con">
-      <Avatar link={element.pic} size="small"></Avatar>
+      <Avatar link={element.picture} size="small"></Avatar>
     <p  onMouseDown={props.drag} onClick={ () => props.clickHandler(element)}  key={element.role}>{element.name}  &nbsp; &nbsp; &nbsp; &nbsp; as  &nbsp; {element.role} </p>
     </div>
     )});

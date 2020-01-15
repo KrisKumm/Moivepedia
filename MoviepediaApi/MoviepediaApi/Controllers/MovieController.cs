@@ -37,10 +37,8 @@ namespace MoviepediaApi.Controllers
 			var client = new GraphClient(new Uri("http://localhost:7474/db/data"), "neo4j", "edukacija");
 			client.Connect();
 
-			string title = mTitle;
-
 			Dictionary<string, object> queryDict = new Dictionary<string, object>();
-			queryDict.Add("movieTitle", title);
+			queryDict.Add("movieTitle", mTitle);
 
 
 			var query = new Neo4jClient.Cypher.CypherQuery("start n=node(*) match (n:Movie) where exists(n.title) and n.title =~ {movieTitle} return n",
@@ -75,10 +73,8 @@ namespace MoviepediaApi.Controllers
 			var client = new GraphClient(new Uri("http://localhost:7474/db/data"), "neo4j", "edukacija");
 			client.Connect();
 
-			string name = ".*" + directorName + ".*";
-
 			Dictionary<string, object> queryDict = new Dictionary<string, object>();
-			queryDict.Add("directorName", name);
+			queryDict.Add("directorName", directorName);
 
 
 			var query = new Neo4jClient.Cypher.CypherQuery("start n=node(*) match (n)-[r:DIRECTED]->(m:Movie) where exists(n.name) and n.name =~ {directorName} return m",
@@ -94,10 +90,8 @@ namespace MoviepediaApi.Controllers
 			var client = new GraphClient(new Uri("http://localhost:7474/db/data"), "neo4j", "edukacija");
 			client.Connect();
 
-			string name = ".*" + dName + ".*";
-
 			Dictionary<string, object> queryDict = new Dictionary<string, object>();
-			queryDict.Add("directorName", name);
+			queryDict.Add("directorName", dName);
 
 
 			var query = new Neo4jClient.Cypher.CypherQuery("start n=node(*) match (n)-[r:DIRECTED]->(m) where exists(n.name) and n.name =~ {directorName} return m",
@@ -113,10 +107,8 @@ namespace MoviepediaApi.Controllers
 			var client = new GraphClient(new Uri("http://localhost:7474/db/data"), "neo4j", "edukacija");
 			client.Connect();
 
-			string name = ".*" + producentName + ".*";
-
 			Dictionary<string, object> queryDict = new Dictionary<string, object>();
-			queryDict.Add("producentName", name);
+			queryDict.Add("producentName", producentName);
 
 
 			var query = new Neo4jClient.Cypher.CypherQuery("start n=node(*) match (n)-[r:PRODUCED]->(m:Movie) where exists(n.name) and n.name =~ {producentName} return m",
@@ -132,10 +124,8 @@ namespace MoviepediaApi.Controllers
 			var client = new GraphClient(new Uri("http://localhost:7474/db/data"), "neo4j", "edukacija");
 			client.Connect();
 
-			string name = ".*" + pName + ".*";
-
 			Dictionary<string, object> queryDict = new Dictionary<string, object>();
-			queryDict.Add("producentName", name);
+			queryDict.Add("producentName", pName);
 
 
 			var query = new Neo4jClient.Cypher.CypherQuery("start n=node(*) match (n)-[r:PRODUCED]->(m) where exists(n.name) and n.name =~ {producentName} return m",
@@ -151,10 +141,8 @@ namespace MoviepediaApi.Controllers
 			var client = new GraphClient(new Uri("http://localhost:7474/db/data"), "neo4j", "edukacija");
 			client.Connect();
 
-			string name = ".*" + writerName + ".*";
-
 			Dictionary<string, object> queryDict = new Dictionary<string, object>();
-			queryDict.Add("writerName", name);
+			queryDict.Add("writerName", writerName);
 
 
 			var query = new Neo4jClient.Cypher.CypherQuery("start n=node(*) match (n)-[r:WROTE]->(m:Movie) where exists(n.name) and n.name =~ {writerName} return m",
@@ -170,10 +158,8 @@ namespace MoviepediaApi.Controllers
 			var client = new GraphClient(new Uri("http://localhost:7474/db/data"), "neo4j", "edukacija");
 			client.Connect();
 
-			string name = ".*" + wName + ".*";
-
 			Dictionary<string, object> queryDict = new Dictionary<string, object>();
-			queryDict.Add("writerName", name);
+			queryDict.Add("writerName", wName);
 
 
 			var query = new Neo4jClient.Cypher.CypherQuery("start n=node(*) match (n)-[r:WROTE]->(m) where exists(n.name) and n.name =~ {writerName} return m",
@@ -184,42 +170,38 @@ namespace MoviepediaApi.Controllers
 			return movies.ToList();
 		}
 
-		public List<Movie> GetMoviesFromActor(string actorName)
+		public List<Role> GetMoviesFromActor(string actorName)
 		{
 			var client = new GraphClient(new Uri("http://localhost:7474/db/data"), "neo4j", "edukacija");
 			client.Connect();
 
-			string name = ".*" + actorName + ".*";
-
 			Dictionary<string, object> queryDict = new Dictionary<string, object>();
-			queryDict.Add("actorName", name);
+			queryDict.Add("actorName", actorName);
 
 
-			var query = new Neo4jClient.Cypher.CypherQuery("start n=node(*) match (n)-[r:ACTED_IN]->(m:Movie) where exists(n.name) and n.name =~ {actorName} return m",
+			var query = new Neo4jClient.Cypher.CypherQuery("start n=node(*) match (n)-[r:ACTED_IN]->(m:Movie) where exists(n.name) and n.name =~ {actorName} RETURN {title: m.title, role: r.roles} as movieRole",
 															queryDict, CypherResultMode.Set);
 
-			List<Movie> movies = ((IRawGraphClient)client).ExecuteGetCypherResults<Movie>(query).ToList();
+			List<Role> roles = ((IRawGraphClient)client).ExecuteGetCypherResults<Role>(query).ToList();
 
-			return movies.ToList();
+			return roles.ToList();
 		}
 
-		public List<Movie> GetMoviesOrSeriesFromActor(string aName)
+		public List<Role> GetMoviesOrSeriesFromActor(string aName)
 		{
 			var client = new GraphClient(new Uri("http://localhost:7474/db/data"), "neo4j", "edukacija");
 			client.Connect();
 
-			string name = ".*" + aName + ".*";
-
 			Dictionary<string, object> queryDict = new Dictionary<string, object>();
-			queryDict.Add("actorName", name);
+			queryDict.Add("actorName", aName);
 
 
-			var query = new Neo4jClient.Cypher.CypherQuery("start n=node(*) match (n)-[r:ACTED_IN]->(m) where exists(n.name) and n.name =~ {actorName} return  m , r.roles as roles",
+			var query = new Neo4jClient.Cypher.CypherQuery("start n=node(*) match (n)-[r:ACTED_IN]->(m) where exists(n.name) and n.name =~ {actorName} return {title: m.title, role: r.roles} as movieOrSeriesRole",
 															queryDict, CypherResultMode.Set);
 
-			List<Movie> movies = ((IRawGraphClient)client).ExecuteGetCypherResults<Movie>(query).ToList();
+			List<Role> roles = ((IRawGraphClient)client).ExecuteGetCypherResults<Role>(query).ToList();
 
-			return movies.ToList();
+			return roles.ToList();
 		}
 
 		public List<Movie> GetMoviesFromRole(string roleName)
@@ -256,9 +238,10 @@ namespace MoviepediaApi.Controllers
             queryDict.Add("trailer", m.trailer);
 
 			var query = new Neo4jClient.Cypher.CypherQuery("MERGE (n:Movie {title:'" + m.title
-															+ "', released:'" + m.released + "', genre:'" + m.genre
+															+ "', released:" + m.released + ", genre:'" + m.genre
 															+ "', tagline:'" + m.tagline
-															+ "', picture:'" + m.picture + "', trailer:'" + m.trailer + "'}) return n",
+															+ "', picture:'" + m.picture + "', trailer:'" + m.trailer + "' , rate:" +
+                                                            m.rate + "}) return n",
 															queryDict, CypherResultMode.Set);
 
             ((IRawGraphClient)client).ExecuteCypher(query);
@@ -266,32 +249,45 @@ namespace MoviepediaApi.Controllers
 		}
 
         [HttpPut]
-        public void updateMovie([FromBody] Movie s)
+        public void updateMovie([FromBody] Movie m)
         {
             var client = new GraphClient(new Uri("http://localhost:7474/db/data"), "neo4j", "edukacija");
             client.Connect();
 
             Dictionary<string, object> queryDict = new Dictionary<string, object>();
             //queryDict.Add("title", s.title);
-            queryDict.Add("rate", s.rate);
+            queryDict.Add("rate", m.rate);
 
-            var query = new Neo4jClient.Cypher.CypherQuery("MERGE (n:Movie {title:{'" + s.title + "'}}) ON MATCH SET n.rate={rate}",
+            var query = new Neo4jClient.Cypher.CypherQuery("MERGE (n:Movie {title:'" + m.title + "'}) ON MATCH SET n.rate={rate} return n",
                                                             queryDict, CypherResultMode.Set);
 
             ((IRawGraphClient)client).ExecuteCypher(query);
            
-
         }
 
-        public string deleteMovie(string title)
+		/*public void update(string title, int rate)
 		{
 			var client = new GraphClient(new Uri("http://localhost:7474/db/data"), "neo4j", "edukacija");
 			client.Connect();
 
-			string movieTitle = title;
+			Dictionary<string, object> queryDict = new Dictionary<string, object>();
+			//queryDict.Add("title", title);
+			queryDict.Add("rate", rate);
+
+			var query = new Neo4jClient.Cypher.CypherQuery("MERGE (n:Movie {title:'" + title + "'}) ON MATCH SET n.rate={rate}",
+															queryDict, CypherResultMode.Set);
+
+			((IRawGraphClient)client).ExecuteCypher(query);
+
+		}*/
+
+		public string deleteMovie(string title)
+		{
+			var client = new GraphClient(new Uri("http://localhost:7474/db/data"), "neo4j", "edukacija");
+			client.Connect();
 
 			Dictionary<string, object> queryDict = new Dictionary<string, object>();
-			queryDict.Add("movieTitle", movieTitle);
+			queryDict.Add("movieTitle", title);
 
 			var query = new Neo4jClient.Cypher.CypherQuery("start n=node(*) where (n:Movie) and exists(n.title) and n.title =~ {movieTitle} delete n",
 															queryDict, CypherResultMode.Projection);
@@ -302,5 +298,42 @@ namespace MoviepediaApi.Controllers
 
 		}
 
-	}
+        public List<Movie> GetMoviesFromYear(int released, int count)
+        {
+            var client = new GraphClient(new Uri("http://localhost:7474/db/data"), "neo4j", "edukacija");
+            client.Connect();
+
+            Dictionary<string, object> queryDict = new Dictionary<string, object>();
+            queryDict.Add("released", released);
+            queryDict.Add("count", count);
+
+
+            var query = new Neo4jClient.Cypher.CypherQuery("start n=node(*) match (n:Movie) where exists(n.released) and n.released > {released} return n order by n.rate desc limit {count}",
+                                                            queryDict, CypherResultMode.Set);
+
+            List<Movie> movies = ((IRawGraphClient)client).ExecuteGetCypherResults<Movie>(query).ToList();
+
+            return movies.ToList();
+        }
+
+        public List<Movie> GetMoviesByGenre(string genre)
+        {
+            var client = new GraphClient(new Uri("http://localhost:7474/db/data"), "neo4j", "edukacija");
+            client.Connect();
+
+            string movieGenre = ".*" + genre + ".*";
+
+            Dictionary<string, object> queryDict = new Dictionary<string, object>();
+            queryDict.Add("genre", movieGenre);
+
+
+            var query = new Neo4jClient.Cypher.CypherQuery("start n=node(*) match (n:Movie) where exists(n.genre) and n.genre =~ {genre} return n",
+                                                            queryDict, CypherResultMode.Set);
+
+            List<Movie> movies = ((IRawGraphClient)client).ExecuteGetCypherResults<Movie>(query).ToList();
+
+            return movies.ToList();
+        }
+
+    }
 }

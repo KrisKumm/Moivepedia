@@ -3,16 +3,16 @@
 
     box-shadow: 7px 7px 5px 2px #eee;
     border: solid 2px #ccc;
-    border-radius: 0 10px 10px 0;
+    /* border-radius: 0 0 10px 10px; */
     width: 80%;
     height: 100%;
-
+    background: black;
     margin: 70px auto;
 
 }
 .search-resoults>div:hover{
 
-    background: #eee;
+    background: rgb(5, 0, 26);
     box-shadow: 7px 7px 5px 2px #fff;
 
 }
@@ -30,7 +30,7 @@
     margin-top: 60px ;
     margin-left: 26px;
     font-size: 26px;
-    color: blue;
+    color: white;
     cursor: pointer;
 }
 

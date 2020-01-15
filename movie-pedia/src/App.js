@@ -5,14 +5,16 @@ import './App.css';
 import Home from './pages/Home/Home';
 class App extends Component {
 
+  homeNavH = () => {
+    this.props.history.push('/film');
+  }
   render() {
   return (
     <div className="App">
-        <Router >
-        <Route path={"/"} render={ (props) => <Home  />} />
-            {/* <Route path={"/Home"} render={ (props) => <Home user={this.user} />} /> */}
-            {/* <Route path={"register"} component={}/> */}
-        </Router>
+      <Router >
+      <Route path={"/"} render={ (props) => <Home nav={this.homeNavH} {...props}></Home>} />
+      </Router>
+        
     </div>
   );
   }

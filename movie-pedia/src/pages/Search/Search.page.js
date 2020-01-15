@@ -1,17 +1,27 @@
 
-import React from 'react';
+import React, { Component } from 'react';
 import './Search.page.css';
+import{ withRouter } from "react-router-dom";
+class search extends Component {
 
-const search = (props) => {
-    
-    let resoults = props.res.map( article => <div key={article.name} onClick={props.clickH}> <img src={article.picture}/> <p>{article.name}</p> </div>);
 
-    return (
-    <div className="search-resoults">
-        {resoults}
-    </div>
-);
+    ItemClick = (item) => {
+        
+        this.props.clickH(item);
+        this.props.history.push('/film');
+    }
+
+    render() {
+
+          let resoults = this.props.res.map( article => <div key={article.name} onClick={this.ItemClick.bind(this,article)}> <img src={article.picture}/> <p>{article.name}</p> </div>);
+      
+          return (
+          <div className="search-resoults">
+              {resoults}
+          </div>
+        );
+      }
 }
 
 
-export default search;
+export default withRouter(search);

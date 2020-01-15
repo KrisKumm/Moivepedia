@@ -4,7 +4,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  background: #001172;
+  background: #000000;
   height: 56px;
 }
 
@@ -62,7 +62,7 @@
   padding-bottom: 5px;
   background: white;
   font-size: 36px;
-  color: green;
+  color: rgb(182, 164, 0);
   cursor: pointer;
 }
 

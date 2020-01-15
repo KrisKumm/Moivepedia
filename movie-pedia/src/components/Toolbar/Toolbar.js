@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 
 import './Toolbar.css';
 import Search from "../SearchBar/SearchBar";
-
+import{ withRouter } from "react-router-dom";
 class Toolbar extends Component {
   
   sType = 1;
 
   AddHandler = () => {
-    console.log("add");
+    this.props.history.push(`/Add/${this.sType}`);
   }
 
   SearchTextHandler = (event) => {
@@ -23,6 +23,8 @@ class Toolbar extends Component {
     if(event.key === "Enter"){
       console.log(this.search);
       console.log(this.sType);
+      this.props.searchH({search: this.search , type: this.sType});
+      this.props.history.push('/search');
     }
   }
 
@@ -48,4 +50,4 @@ class Toolbar extends Component {
     }
 }
 
-export default Toolbar;
+export default withRouter(Toolbar);

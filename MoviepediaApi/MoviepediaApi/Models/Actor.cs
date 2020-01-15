@@ -9,7 +9,7 @@ namespace MoviepediaApi.Models
 	{
 		//public String id { get; set; }
 		public String name { get; set; }
-		public String born { get; set; }
+		public int born { get; set; }
 		public String birthplace { get; set; }
 		public String biography { get; set; }
         public String picture { get; set; }

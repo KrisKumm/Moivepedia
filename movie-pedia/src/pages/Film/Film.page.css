@@ -3,7 +3,7 @@
     min-height: 100vh;
     width: 100%;
     margin: 0;
-    background-color: rgb(4, 4, 66); 
+    /* background-color: rgb(4, 4, 66);  */
 
 }
 
@@ -14,8 +14,9 @@
     /* margin: 0; */
     width: 80%;
     height: 300px;
-    background: rgba(108, 211, 185, 0.726);
-    box-shadow: 5px 3px 4px 5px #444;
+    background-color: rgba(5, 0, 26, 0.582);
+    border-radius: 0 0 10px 10px;
+    /* box-shadow: 5px 3px 4px 5px #444; */
 }
 
 .film-header>div{
@@ -23,25 +24,26 @@
     display: flex;
     padding-top: 70px;
     margin-left: 480px;
-    color: crimson;
+    color: rgb(255, 255, 255);
     font-size: 38px;
 }
 .film-header>p{
     margin-left: 270px;
-    color: wheat;
+    font-size: 20px;
+    color: rgb(231, 183, 213);
 }
 .film-header .rating{
     margin-left: 60px;
-    color: rgb(250, 250, 86);
+    color: rgb(231, 183, 213);
 }
 
 .film-picture{
     position: absolute;
     z-index: 2;
-    top: 22%;
-    left: 13%;
-    height: 40%;
-    width: 30%;
+    top: 18%;
+    left: 11%;
+    height: 46%;
+    width: 34%;
     overflow: hidden;
 }
 
@@ -53,7 +55,7 @@
     min-height: 100vh;
     /* margin-left: 400px; */
 }
-.film-page main>p{
+.film-page main p{
     font-size: larger;
     color: white;
 }
